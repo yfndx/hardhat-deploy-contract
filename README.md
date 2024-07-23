@@ -1,6 +1,6 @@
 
 
-# Swisstronik Tesnet Technical Task 1
+# Swisstronik Testnet Technical Task 1
 
 Link: [Click!](https://www.swisstronik.com/testnet2/dashboard)
 
@@ -108,7 +108,5 @@ module.exports = {
 
 Replace `YOUR_INFURA_PROJECT_ID` with your Infura project ID and `YOUR_PRIVATE_KEY` with your Ethereum account private key.
 
-## License
 
-This project is licensed under the MIT License.
 
