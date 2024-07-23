@@ -103,8 +103,8 @@ npm run set-message
 
 ### 9. Finsihed
 
-- Open the deployed-adddress.ts (location in utils folder)
-- Copy the address and paste the address in testnet dashboard
-- push this project to your github and paste your repository link in testnet dashboard
+- Open the deployed-adddress.ts (location in utils folder).
+- Copy the address and paste the address in testnet dashboard.
+- Push this project to your github and paste your repository link in testnet dashboard.
 
 
