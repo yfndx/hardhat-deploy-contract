@@ -1,110 +1,114 @@
-# Swisstronik Tesnet Techinal Task 1
 
-link : [Click!](https://www.swisstronik.com/testnet2/dashboard)
 
-Feel free donate to my EVM address
+# Swisstronik Tesnet Technical Task 1
 
-EVM :
+Link: [Click!](https://www.swisstronik.com/testnet2/dashboard)
 
-```bash
-0x2708b38B6F978a20de7AC14D5dAd5305F72aA0d8
-```
+## Hardhat Deploy Contract
 
-## Steps
+This repository contains a Hardhat project for deploying Ethereum smart contracts. Below is an explanation of the key components and how to deploy the contract.
 
-### 1. Clone Repository
+## Explanation of Code
 
-```bash
-git clone https://github.com/Mnuralim/hardhat-deploy-contract.git
-```
+### Solidity Contract: `contracts/MyContract.sol`
 
-```
-cd hardhat-deploy-contract
-```
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-### 2. Install Dependency
+contract MyContract {
+    string public message;
 
-```bash
-npm install
-```
-
-### 3. Set .env File
-
-create .env file in root project
-
-```bash
-PRIVATE_KEY="your private key"
-```
-
-### 4. Create Smart Contract
-
-- Open contract folder
-- Create Hello_swtr.sol file
-- Copy this code and paste there
-
-```
-/// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.19;
-
-//This contract is only intended for testing purposes
-
-contract Swisstronik {
-    string private message;
-
-    /**
-     * @dev Constructor is used to set the initial message for the contract
-     * @param _message the message to associate with the message variable.
-     */
-    constructor(string memory _message) payable{
+    constructor(string memory _message) {
         message = _message;
     }
 
-    /**
-     * @dev setMessage() updates the stored message in the contract
-     * @param _message the new message to replace the existing one
-     */
     function setMessage(string memory _message) public {
         message = _message;
-    }
-
-    /**
-     * @dev getMessage() retrieves the currently stored message in the contract
-     * @return The message associated with the contract
-     */
-    function getMessage() public view returns(string memory){
-        return message;
     }
 }
 ```
 
-### 5. Compile Smart Contract
+- **`message`**: A public state variable to store a string.
+- **`constructor`**: Initializes the contract with a message.
+- **`setMessage`**: Updates the message.
 
-```bash
-npm run compile
+### Deployment Script: `scripts/deploy.js`
+
+```javascript
+async function main() {
+    const [deployer] = await ethers.getSigners();
+    console.log("Deploying contracts with the account:", deployer.address);
+
+    const MyContract = await ethers.getContractFactory("MyContract");
+    const myContract = await MyContract.deploy("Hello, Hardhat!");
+    console.log("MyContract deployed to:", myContract.address);
+}
+
+main()
+    .then(() => process.exit(0))
+    .catch((error) => {
+        console.error(error);
+        process.exit(1);
+    });
 ```
 
-### 6. Deploy Smart Contract
+- **`main` function**: Deploys the `MyContract` with an initial message "Hello, Hardhat!".
+- **`ethers.getSigners`**: Retrieves the deployer's account.
+- **`ethers.getContractFactory`**: Prepares the contract for deployment.
+- **`MyContract.deploy`**: Deploys the contract to the specified network.
 
-```bash
-npm run deploy
+## Deploying the Contract
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+
+### Steps
+
+1. **Install dependencies**:
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+
+2. **Compile the contract**:
+    ```bash
+    npx hardhat compile
+    ```
+
+3. **Deploy the contract**:
+    ```bash
+    npx hardhat run scripts/deploy.js --network <network-name>
+    ```
+    Replace `<network-name>` with the desired network, such as `localhost`, `ropsten`, or `mainnet`.
+
+### Example Configuration in `hardhat.config.js`
+
+```javascript
+require("@nomiclabs/hardhat-waffle");
+
+module.exports = {
+    solidity: "0.8.4",
+    networks: {
+        localhost: {
+            url: "http://127.0.0.1:8545"
+        },
+        ropsten: {
+            url: `https://ropsten.infura.io/v3/YOUR_INFURA_PROJECT_ID`,
+            accounts: [`0x${YOUR_PRIVATE_KEY}`]
+        }
+    }
+};
 ```
 
-### 7. Get Message
+Replace `YOUR_INFURA_PROJECT_ID` with your Infura project ID and `YOUR_PRIVATE_KEY` with your Ethereum account private key.
 
-```bash
-npm run get-message
-```
+## License
 
-### 8. Get Message
-
-```bash
-npm run set-message
-```
-
-### 9. Finsihed
-
-- Open the deployed-adddress.ts (location in utils folder).
-- Copy the address and paste the address in testnet dashboard.
-- Push this project to your github and paste your repository link in testnet dashboard.
-
+This project is licensed under the MIT License.
 
